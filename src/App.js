@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch()
   const user = useSelector(selectUser)
 
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       //auth user stores aal info about user from email
@@ -23,12 +23,11 @@ function App() {
         //push to redux store
         dispatch(
           login({
-          uid: authUser.uid,
-          photo: authUser.photoURL,
-          email: authUser.email,
-          displayName: authUser.displayName
-
-        })
+            uid: authUser.uid,
+            photo: authUser.photoURL,
+            email: authUser.email,
+            displayName: authUser.displayName,
+          })
         )
       }
       //when user logs out

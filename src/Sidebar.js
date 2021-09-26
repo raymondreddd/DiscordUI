@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './sidebar.css'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,10 +12,36 @@ import MicIcon from '@mui/icons-material/Mic';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useSelector } from 'react-redux';
 import { selectUser } from './features/userSlice'
-import {auth} from './firebase';
+import db, {auth} from './firebase';
+
 
 function Sidebar() {
+    //state
+    const [channels, setChannels] = useState([])
 
+    useEffect(() => {
+
+        db.collection('channels').onSnapshot((snapshot) =>
+          setChannels(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              channel: doc.data(),
+            }))
+          )
+        )
+
+      }, [])
+
+    const handleAddChannel =()=>{
+        const channelName = prompt("Enter channel Name")
+
+        if(channelName){
+            db.collection('channels').add({
+                channelName: channelName,
+            })
+        }
+        //this fires off useEffect above
+    }
     //for the avatar info
     const user = useSelector(selectUser);
     console.log("In sidebar user object")
@@ -34,15 +60,18 @@ function Sidebar() {
                         <ExpandMoreIcon />
                         <h4>Text Channels</h4>
                     </div>
-                    <AddIcon className="sidebar__addChannel" />
+                    <AddIcon className="sidebar__addChannel" onClick={handleAddChannel} />
                 </div>
 
                 {/* Channel lists*/}
                 <div className="sidebar__channelList">
-                    <SidebarChannel />
-                    <SidebarChannel />
-                    <SidebarChannel />
-                    <SidebarChannel />
+                    {channels.map(({ id, channel }) => (
+                        <SidebarChannel
+                        key={id}
+                        id={id}
+                        channelName={channel.channelName}
+                        />
+                    ))}
                 </div>
          </div>
 
