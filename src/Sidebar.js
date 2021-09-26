@@ -18,8 +18,8 @@ function Sidebar() {
 
     //for the avatar info
     const user = useSelector(selectUser);
+    console.log("In sidebar user object")
     console.log(user)
-    console.log(JSON.stringify(user))
     return (
         <div className="sidebar">
             {/* <h2>Sidebar</h2> */}
@@ -68,8 +68,8 @@ function Sidebar() {
             <div className="sidebar__profile">
                 <Avatar src={user.photo} onClick={() => auth.signOut()}alt="photo from email" />
                 <div className="sidebar__profileInfo">
-                    <h3>{user.displayName}</h3>
-                    <p>${user.uid}</p>
+                    <h3>WTF{user.displayName}</h3>
+                    <p>#{user.uid.substring(0, 5)}</p>
                 </div>
 
                 <div className="sidebar__profileIcons" >
