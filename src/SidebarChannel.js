@@ -10,7 +10,7 @@ function SidebarChannel({id, channelName }) {
     
     
     return (
-        <div className="sidebarChannel" onCLick={() => dispatch(setChannelInfo({
+        <div className="sidebarChannel" onClick={() => dispatch(setChannelInfo({
             channelId: id,
             channelName: channelName,
         }))}>

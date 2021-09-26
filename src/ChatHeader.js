@@ -9,6 +9,8 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 
 
 function ChatHeader( {channelName}) {
+    console.log("Clicked list and now in header")
+    console.log(channelName)
     return (
         <div className="chatHeader">
             <div className="chatHeader__left">
